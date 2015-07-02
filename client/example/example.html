@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>CerebrumIrrumbabo</title>
+	</head>
+	<body>
+		<textarea id="code" value="test">[&gt;,]&lt;[.&lt;]</textarea>
+		<input type="text" id="input"/>
+		<button id="submit">Submit</button>
+	</body>
+	<script type="text/javascript" src="../CerebrumIrrumabo.js"></script>
+	<script type="text/javascript">
+		var button = document.getElementById('submit'),
+			code = document.getElementById('code'),
+			input = document.getElementById('input');
+			
+		button.addEventListener('click', function (e) {
+			var evaluate = new CerebrumIrrumabo(input.value, code.value);
+			alert(evaluate.run());
+		});
+	</script>
+	
+</html>
