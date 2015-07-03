@@ -2,10 +2,20 @@
 // 2015 Joe Pfeiffer
 var version = 0.1;
 
-var CerebrumIrrumabo = function(input, code) {
+var TIMER = false;
 
+var CerebrumIrrumabo = function(input, code) {
+    
+    this.pointerLength = 30;
+    
+    var that = this;
+    
+    
 	this.run = function() {
-        return interpret(input, code);
+        return interpret(input, code, that.pointerLength);
+        setTimeout(function() {
+            TIMER = true;
+        }, 50000);
     };
 };
 
@@ -13,16 +23,15 @@ var CerebrumIrrumabo = function(input, code) {
 
 
 
-function interpret(input, code) {
-	
+function interpret(input, code, pointerLength) {
 	var pointerPos = 0,
 		inputPointer = 0,
 		inputPointerIn = 0,
-		pointer = initializePointer(3000),
+		pointer = initializePointer(pointerLength),
 		outputString = '';
 	
 	
-    while(inputPointer <= code.length - 1) {
+    while(inputPointer <= code.length - 1 && !TIMER) {
         var ch = code.charAt(inputPointer);
         if (ch == "+") {
             pointer[pointerPos] = pointer[pointerPos] + 1;
@@ -34,20 +43,21 @@ function interpret(input, code) {
             }
         }
         if ( ch == "<") {
-            pointerPos = pointerPos - 1;
-            if (pointerPos<0) {
-                pointerPos = 0;
+            pointerPos--;
+            if (pointerPos < 0) {
+                // pointerPos = 0;
+                throw 'Out of bounds';
             }
         }
         if (ch == ">") {
-            pointerPos = pointerPos + 1;
-            if (pointerPos > 3000) {
-                pointerPos = 3000;
+            pointerPos++;
+            if (pointerPos > pointerLength) {
+                throw 'Out of bounds';
             }
         }
         if (ch == ",") {
 			var r; //TODO fix this
-            if (inputPointerIn < code.length) {
+            if (inputPointerIn < input.length) {
                 r = input.charCodeAt(inputPointerIn);
                 pointer[pointerPos] = r;
             } else {
@@ -60,18 +70,17 @@ function interpret(input, code) {
         }
         if (ch == "[") {
             if (pointer[pointerPos] == 0) {
-                a = "";
-                while (a !== "]") {
+                var a = "";
+                while (a != "]") {
                     inputPointer = inputPointer + 1;
-                    a = code.charAt(inputPointer)
+                    a = code.charAt(inputPointer);
                 }
             }
         }
         if (ch == "]") {
-			var a; //TODO Fix this
-            if(pointer[pointerPos] !== 0) {
-                a = "";
-                while(a !== "[") {
+            if(pointer[pointerPos] != 0) {
+                var a = "";
+                while(a != "[") {
                     inputPointer = inputPointer - 1;
                     a = code.charAt(inputPointer);
                 }
