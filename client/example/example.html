@@ -12,32 +12,75 @@
 	<body>
 		<textarea id="code" value="test">&gt;,[&gt;,]&lt;[.&lt;]</textarea>
 		<input type="text" id="input"/>
+		<input type="text" id="break" />
 		<p id="inpector"></p>
+		<p id="input-indicator"></p>
+		<p id="output"></p>
 		<button id="submit">Step</button>
+		<button id="run">Run</button>
+		<button id="init">Initialize</button>
 	</body>
 	<script type="text/javascript" src="../CerebrumIrrumabo.js"></script>
 	<script type="text/javascript">
 		var button = document.getElementById('submit'),
+			run = document.getElementById('run');
+			init = document.getElementById('init'),
 			code = document.getElementById('code'),
 			input = document.getElementById('input'),
-			inspector = document.getElementById('inpector');
-		var evaluate = new CerebrumIrrumabo(input.value, code.value);
-		evaluate.debug = true;
+			inspector = document.getElementById('inpector'),
+			inputIndicator = document.getElementById('input-indicator'),
+			output = document.getElementById('output');
+			
+		var evaluate;
+		
+		function hilight(text, index) {
+			var char = text.charAt(index);
+
+			var before = text.slice(0, index);
+			var after = text.slice(index + 1);
+			
+			var updateString = before + '<span class="hilight">' + char + '</span>' + after;
+			return updateString;
+		}
+		
 		
 		button.addEventListener('click', function (e) {
-			inspector.innerText = code.value;
+			// inspector.innerText = code.value;
+			// inputIndicator.innerText = input.value;
+			
 			var debugObj = {};
 			debugObj = evaluate.step();
 			if (debugObj != true) {
-				var inspectorValue = code.value;
-				var char = inspectorValue.charAt(debugObj.codePos);
-				// alert(char);
-				
-				var before = inspectorValue.slice(0, debugObj.codePos);
-				var after = inspectorValue.slice(debugObj.codePos + 1);
-				
-				var updateString = before + '<span class="hilight">' + char + '</span>' + after;
+				//Hilight the code
+				var updateString =  hilight(code.value, debugObj.codePos);
 				inspector.innerHTML = updateString;
+				
+				//Hilight the input
+				updateString = hilight(input.value, debugObj.inputPos);
+				inputIndicator.innerHTML = updateString;
+				
+				//Update the output
+				output.innerText = debugObj.output;
+				
+			}
+		});
+		
+		init.addEventListener('click', function(e) {
+			evaluate = new CerebrumIrrumabo(input.value, code.value);
+			evaluate.debug = true;
+			var breakPoint = document.getElementById('break');
+			if (breakPoint.value != '') {
+				evaluate.addBreakpoint(breakPoint.value);
+			}
+		});
+		
+		run.addEventListener('click', function(e) {
+			var stepVal = evaluate.run();
+			if (stepVal != true) {
+				var codeHi = hilight(code.value, stepVal.codePos);
+				var inputHi = hilight(input.value, stepVal.inputPos);
+				inputIndicator.innerHtml = inputHi;
+				inspector.innerHtml = codeHi;
 			}
 		});
 	</script>

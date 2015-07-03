@@ -4,19 +4,23 @@ var version = 0.1;
 
 var TIMER = false;
 
-var CerebrumIrrumabo = function(input, code) {
+var CerebrumIrrumabo = function(input, code, pointerLength) {
     var that = this;
     
     
     var debug = false;
-    var pointerLength = 30;
-    var debugValues = {
-        pointer: [],
-        pointerPos: 0,
-        inputPos: 0,
-        codePos: 0,
-        codeChar: '',
-    };
+    if (pointerLength == undefined) {
+        var pointerLength = 30;
+    }
+    
+    var breakPoints = [];
+    function addBreakpoint(index) {
+        if (!debug) {
+            debug = true;
+        }
+        breakPoints.push(parseInt(index));
+        console.log(breakPoints);
+    }
     
     
     var pointerPos = 0,
@@ -82,11 +86,11 @@ var CerebrumIrrumabo = function(input, code) {
                 }
             }
             inputPointer++;
-            if (this.debug) {
+            if (debug) {
                 return {
                     pointer: pointer,
                     pointerPos: pointerPos,
-                    inputPos: inputPointerIn,
+                    inputPos: inputPointerIn - 1,
                     codePos: inputPointer - 1,
                     output: outputString
                 };
@@ -109,20 +113,19 @@ var CerebrumIrrumabo = function(input, code) {
     
     
 	var run = function() {
-        if (!this.debug) {
-            pointerPos = 0,
-    		inputPointer = 0,
-    		inputPointerIn = 0,
-    		pointer = initializePointer(pointerLength),
-    		outputString = '';
-            var endOfCode = false;
-            while (!endOfCode) {
-                endOfCode = step();
-            }
+        if (!debug) {
+             reset();
+        }
+        var endOfCode = false;
+        while (endOfCode != true && breakPoints.indexOf(endOfCode.codePos) == -1) {
+            endOfCode = step();
+        }
+        if (endOfCode == true){
             return outputString;
         } else {
-            return null;
+            return endOfCode;
         }
+ 
     };
     
     var reset = function () {
@@ -137,8 +140,8 @@ var CerebrumIrrumabo = function(input, code) {
         input: input,
         code: code,
         debug: debug,
+        addBreakpoint: addBreakpoint,
         pointerLength: pointerLength,
-        debugValues: debugValues,
         run: run,
         step: step,
         reset: reset
