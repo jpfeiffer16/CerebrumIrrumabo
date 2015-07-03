@@ -3,21 +3,42 @@
 <html>
 	<head>
 		<title>CerebrumIrrumbabo</title>
+		<style>
+			.hilight {
+				background-color: yellow;
+			}
+		</style>
 	</head>
 	<body>
-		<textarea id="code" value="test">[&gt;,]&lt;[.&lt;]</textarea>
+		<textarea id="code" value="test">&gt;,[&gt;,]&lt;[.&lt;]</textarea>
 		<input type="text" id="input"/>
-		<button id="submit">Submit</button>
+		<p id="inpector"></p>
+		<button id="submit">Step</button>
 	</body>
 	<script type="text/javascript" src="../CerebrumIrrumabo.js"></script>
 	<script type="text/javascript">
 		var button = document.getElementById('submit'),
 			code = document.getElementById('code'),
-			input = document.getElementById('input');
-			
+			input = document.getElementById('input'),
+			inspector = document.getElementById('inpector');
+		var evaluate = new CerebrumIrrumabo(input.value, code.value);
+		evaluate.debug = true;
+		
 		button.addEventListener('click', function (e) {
-			var evaluate = new CerebrumIrrumabo(input.value, code.value);
-			alert(evaluate.run());
+			inspector.innerText = code.value;
+			var debugObj = {};
+			debugObj = evaluate.step();
+			if (debugObj != true) {
+				var inspectorValue = code.value;
+				var char = inspectorValue.charAt(debugObj.codePos);
+				// alert(char);
+				
+				var before = inspectorValue.slice(0, debugObj.codePos);
+				var after = inspectorValue.slice(debugObj.codePos + 1);
+				
+				var updateString = before + '<span class="hilight">' + char + '</span>' + after;
+				inspector.innerHTML = updateString;
+			}
 		});
 	</script>
 	
