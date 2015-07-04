@@ -113,13 +113,14 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
     
     
 	var run = function() {
-        if (!debug) {
+        if (!this.debug) {
              reset();
         }
         var endOfCode = false;
         while (endOfCode != true && breakPoints.indexOf(endOfCode.codePos) == -1) {
             endOfCode = step();
         }
+        console.log(endOfCode);
         if (endOfCode == true){
             return outputString;
         } else {
@@ -151,7 +152,7 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
 
 function initializePointer(plen) {
 	var pointerArray = new Array(plen);
-    for( var i = 0; i<plen; i = i + 1){
+    for( var i = 0; i < plen; i = i + 1){
         pointerArray[i] = 0;
     }
 	return pointerArray;

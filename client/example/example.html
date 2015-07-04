@@ -50,6 +50,7 @@
 			
 			var debugObj = {};
 			debugObj = evaluate.step();
+			console.log(debugObj);
 			if (debugObj != true) {
 				//Hilight the code
 				var updateString =  hilight(code.value, debugObj.codePos);
@@ -79,8 +80,8 @@
 			if (stepVal != true) {
 				var codeHi = hilight(code.value, stepVal.codePos);
 				var inputHi = hilight(input.value, stepVal.inputPos);
-				inputIndicator.innerHtml = inputHi;
-				inspector.innerHtml = codeHi;
+				inputIndicator.innerHTML = inputHi;
+				inspector.innerHTML = codeHi;
 			}
 		});
 	</script>
