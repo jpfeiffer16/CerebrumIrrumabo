@@ -6,3 +6,7 @@ body {
 	background-color: #1D1D25;
 	height: auto;
 }
+
+.CodeMirror div.CodeMirror-cursor {
+	color: white;
+}
