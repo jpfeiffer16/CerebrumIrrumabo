@@ -8,7 +8,7 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
     var that = this;
     
     
-    var debug = false;
+    var debug = true;
     if (pointerLength == undefined) {
         var pointerLength = 30;
     }
@@ -91,7 +91,7 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
                     pointer: pointer,
                     pointerPos: pointerPos,
                     inputPos: inputPointerIn - 1,
-                    codePos: inputPointer - 1,
+                    codePos: inputPointer - 1 == -1 ? 0 : inputPointer - 1,
                     output: outputString
                 };
             } else {

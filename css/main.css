@@ -1,10 +1,12 @@
 body {
-	background-color: #101017;
+	background-color: #252526;
+	overflow-y: hidden;
 }
 
 .CodeMirror {
-	background-color: #1D1D25;
-	height: auto;
+	background-color: #1E1E1E;;
+	color: #3E5335;
+	height: 100%;
 }
 
 .CodeMirror-cursor {
@@ -15,6 +17,80 @@ body {
 	height: 30px;
 }
 
+#ribbon-area button {
+	background-color: transparent;
+	border-style: none;
+	color: #9A9A9B;
+}
+
+#ribbon-area button:hover {
+	color: ghostwhite;
+	cursor: pointer;
+}
+
+#ribbon-area .ribbon-group {
+	display: inline;
+	margin: 0px 10px;
+}
+
+
+input[type="text"] {
+	background-color: rgb(87, 87, 87);
+	color: #9A9A9B;
+	border-style: none;
+	padding: 0 5px;
+	border-radius: 3px;
+}
+
+
+
+
+/*#console-area {
+	height: 80%;
+}*/
+
+/*#editor-area {
+	height: 15%;
+}*/
+
 .ui-splitbar {
-	background-color: saddlebrown;
+	background-color: #2E2F30;
+	cursor: row-resize;
+}
+
+div[ui-splitbar]:nth-child(2) {
+	display: none;
+}
+
+
+
+
+.hidden {
+	display: none;
+}
+
+
+
+
+
+/*Custom Bf-lang styles for Code Mirror*/
+
+.cm-pointer-mover {
+	color: #A57D49;
+}
+
+.cm-pointer-operator {
+	color: brown;
+}
+
+.cm-io-operator {
+	color: #C08871;
+}
+
+.cm-loop-operator {
+	color: #569CD6;
+}
+
+.CodeMirror-matchingbracket {
+	color: darkolivegreen !important;
 }
