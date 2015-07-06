@@ -7,6 +7,14 @@ body {
 	height: auto;
 }
 
-.CodeMirror div.CodeMirror-cursor {
-	color: white;
+.CodeMirror-cursor {
+	border-color: white;
+}
+
+#ribbon-area {
+	height: 30px;
+}
+
+.ui-splitbar {
+	background-color: saddlebrown;
 }
