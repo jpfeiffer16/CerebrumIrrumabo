@@ -86,17 +86,13 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
                 }
             }
             inputPointer++;
-            if (debug) {
-                return {
-                    pointer: pointer,
-                    pointerPos: pointerPos,
-                    inputPos: inputPointerIn - 1,
-                    codePos: inputPointer - 1 == -1 ? 0 : inputPointer - 1,
-                    output: outputString
-                };
-            } else {
-                return false;
-            }
+            return {
+                pointer: pointer,
+                pointerPos: pointerPos,
+                inputPos: inputPointerIn - 1,
+                codePos: inputPointer - 1 == -1 ? 0 : inputPointer - 1,
+                output: outputString
+            };
         } else {
             return true;
         }
@@ -120,9 +116,12 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
         while (endOfCode != true && breakPoints.indexOf(endOfCode.codePos) == -1) {
             endOfCode = step();
         }
-        console.log(endOfCode);
+        // console.log(endOfCode);
         if (endOfCode == true){
-            return outputString;
+            return {
+                endOfCode: true,
+                output: outputString
+            };
         } else {
             return endOfCode;
         }

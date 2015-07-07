@@ -13,7 +13,7 @@
     <div id="container" ng-controller="MainCtrl as main" ui-layout="{ flow : 'row' }">
       <div id="ribbon-area" ui-layout-container>
         <div class="ribbon-group">
-          <button id="button-open"><span class="icon-folder-open"></span></button>
+          <button id="button-open" ng-click="main.openFile()"><span class="icon-folder-open"></span></button>
           <button id="button-save"><span class="icon-floppy-disk"></span></button>
         </div>
         <div class="ribbon-group">
@@ -26,13 +26,18 @@
       <div id="editor-area" ui-layout-container height-watch></div>
       <!--<div class="ui-splitbar"></div>-->
       <div id="console-area" ui-layout-container>
-        <div>
-          <p>Test</p>
-        </div>
-        <div>
-          <p ng-repeat="item in main.results">
-            {{item}}
+        <div id="dev-ribbon">
+          <p>
+            <div class="tab active">Console</div><div class="tab">Debug</div>
           </p>
+        </div>
+        <div id="console-container">
+          <span ng-repeat="item in main.results track by $index">
+            {{item}}
+          </span><br>
+        </div>
+        <div id="debug-container" class="hidden">
+          Yo test
         </div>
       </div>
     </div>

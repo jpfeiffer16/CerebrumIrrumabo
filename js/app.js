@@ -26,11 +26,17 @@ angular.module('app', ['ui.layout'])
 			}
 			runner.debug = true;
 			// runner.addBreakpoint(2);
-			var test = runner.step();
-			// if (typeof(test) != 'object') {
-			this.results.push(test);
-			// }
+			var test = runner.run();
+			if (test.endOfCode) {
+				this.results.push(test.output);
+			}
 			console.log(test);
+		};
+		
+		this.openFile = function() {
+			chrome.fileSystem.chooseEntry({type: 'openWritableFile'}, function(entry, entries) {
+				console.log(entry + '\n', entries);
+			});
 		};
 		
 	})
@@ -45,8 +51,8 @@ angular.module('app', ['ui.layout'])
 				setTimeout(function() {
 					var winHeight = $window.innerHeight;
 					console.log(winHeight - 300);
-					element.css('height', winHeight - 300);
-				}, 3000);
+					element.css('height', (winHeight / 1.5).toString() +  'px');
+				}, 0);
 			}
 		};
 	});
