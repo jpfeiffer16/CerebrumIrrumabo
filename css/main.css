@@ -1,6 +1,7 @@
 body {
 	background-color: #252526;
 	overflow-y: hidden;
+	font-size: 16px;
 }
 
 .CodeMirror {
