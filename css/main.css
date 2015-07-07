@@ -1,3 +1,7 @@
+.hidden {
+	display: none;
+}
+
 body {
 	background-color: #252526;
 	overflow-y: hidden;
@@ -12,7 +16,7 @@ body {
 }
 
 .CodeMirror-cursor {
-	border-color: white;
+	border-left-color: #9A9A9B !important;
 }
 
 #ribbon-area {
@@ -34,7 +38,6 @@ body {
 	display: inline;
 	margin: 0px 10px;
 }
-
 
 input[type="text"] {
 	background-color: rgb(87, 87, 87);
@@ -61,15 +64,13 @@ input[type="text"] {
 }
 
 div[ui-splitbar]:nth-child(2) {
-	display: none;
+	/*display: none;*/
 }
 
 
 
 
-.hidden {
-	display: none;
-}
+
 
 
 #dev-ribbon {
@@ -87,17 +88,19 @@ div[ui-splitbar]:nth-child(2) {
 #dev-ribbon .tab {
 	text-decoration: none;
 	margin: 0px 20px;
-	color: #9A9A9B;
+	color: ghostwhite;
 	display: inline;
 }
 
+
+
 #dev-ribbon .tab:hover {
-	color: ghostwhite;
+	/*color: ghostwhite;*/
 	cursor: pointer;
 }
 
-#dev-ribbon .tab.active {
-	color: ghostwhite;
+#dev-ribbon .tab.hidden {
+	color: #9A9A9B;
 }
 
 
