@@ -2,6 +2,8 @@
 /* global CerebrumIrrumabo */
 /* global $ */
 /* global angular */
+
+
 angular.module('app', ['ui.layout'])
 	.controller('MainCtrl', function($scope) {
 		this.input = '';
@@ -76,7 +78,7 @@ angular.module('app', ['ui.layout'])
 							that.loadedFileName = file.name;
 							editor.setValue(e.target.result);
 							$scope.$apply();
-							//Save the last loaded file to localStorage
+							//Save the last loaded file to localStorage   TODO: Fix this, it's not freakin working
 							chrome.storage.local.set({lastLoaded: entry.fullPath});
 						};
 						
@@ -92,7 +94,7 @@ angular.module('app', ['ui.layout'])
 					fileWriter.onerror = function(e) {
 				      console.log("Write failed: " + e.toString());
 				    };
-					var blob = new Blob([editor.getValue()], {type: 'text/plain'});
+					var blob = new Blob(['This is a super long test']);
 					fileWriter.truncate(blob.size);
 					
 					fileWriter.onwriteend = function() {
@@ -119,6 +121,7 @@ angular.module('app', ['ui.layout'])
 		
 		
 		//Init:
+		//TODO: Fix this as well since, you guessed it, it's not fffffinng working either....
 		chrome.storage.local.get('lastLoaded', function(result) {
 			chrome.fileSystem.getFile(result.lastLoaded.toString(), function (entry) {
 				console.log(entry);
