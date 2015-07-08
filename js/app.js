@@ -94,8 +94,8 @@ angular.module('app', ['ui.layout'])
 					fileWriter.onerror = function(e) {
 				      console.log("Write failed: " + e.toString());
 				    };
-					var blob = new Blob(['This is a super long test']);
-					fileWriter.truncate(blob.size);
+					var blob = new Blob(['This is a super long test'], {type: "text/plain"});
+					// fileWriter.truncate(blob.size);
 					
 					fileWriter.onwriteend = function() {
 						that.saved = true;
