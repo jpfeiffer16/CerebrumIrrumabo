@@ -16,6 +16,9 @@ angular.module('app', ['ui.layout'])
 		this.consoleClass = '';
 		this.debugClass = 'hidden';
 		
+		var engineIsDirty = true;
+		
+		//Set up the editor
 		var container = document.getElementById('editor-area');
 		var editor = CodeMirror(container, {
 			mode: 'bfmode',
@@ -23,9 +26,9 @@ angular.module('app', ['ui.layout'])
 			matchBrackets: true,
 			autoCloseBrackets: true
 		});
-		editor.setOption('save', {
+		editor.setOption('extraKeys', {
 			'Ctrl-S': function () {
-				that.saveFile(that.entry);
+				that.saveFile(that.fileEntry);
 			}
 		});
 		
@@ -47,18 +50,20 @@ angular.module('app', ['ui.layout'])
 		
 		this.results = [];
 		
-		var runner;
+		//Set up the CerebrumIrrumabo Instance
+		this.pointerLen = 200;//TODO: Add a binding for this on the front end
+		var runner = new CerebrumIrrumabo('', '', this.pointerLen);
 		this.run = function (input, code) {
-			var pointerLen = 200;
-			if (!runner) {
-				runner = new CerebrumIrrumabo(input, code, pointerLen);
+			if (engineIsDirty) {
+				runner.debug = true;
+				runner.code = code;
+				runner.input = input;
 			}
-			runner.debug = true;
-			// runner.addBreakpoint(2);
 			try {
 				var test = runner.run();
 				if (test.endOfCode) {
 					this.results.push(test.output + '\n');
+					engineIsDirty = true;
 				}
 				console.log(test);
 			} catch (e) {
@@ -94,8 +99,7 @@ angular.module('app', ['ui.layout'])
 					fileWriter.onerror = function(e) {
 				      console.log("Write failed: " + e.toString());
 				    };
-					var blob = new Blob(['This is a super long test'], {type: "text/plain"});
-					// fileWriter.truncate(blob.size);
+					var blob = new Blob([editor.getValue()], {type: "text/plain"});
 					
 					fileWriter.onwriteend = function() {
 						that.saved = true;
@@ -106,8 +110,10 @@ angular.module('app', ['ui.layout'])
 					
 					fileWriter.write(blob);
 				});
+			} else {
+				throw 'File was not saved';
 			}
-		}
+		};
 		
 		this.toggleConsoleArea = function(panelToShow) {
 			if (panelToShow == 'console') {

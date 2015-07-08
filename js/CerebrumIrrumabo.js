@@ -7,6 +7,10 @@ var TIMER = false;
 var CerebrumIrrumabo = function(input, code, pointerLength) {
     var that = this;
     
+    var input = input;
+    var code = code;
+    var pointerLength = pointerLength;
+    
     
     var debug = true;
     if (pointerLength == undefined) {
@@ -24,10 +28,10 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
     
     
     var pointerPos = 0,
-    		inputPointer = 0,
-    		inputPointerIn = 0,
-    		pointer = initializePointer(pointerLength),
-    		outputString = '';
+		inputPointer = 0,
+		inputPointerIn = 0,
+		pointer = initializePointer(pointerLength),
+		outputString = '';
     function step() {
     	// var input = this.input, code = this.code;
         if (inputPointer <= code.length - 1) {
