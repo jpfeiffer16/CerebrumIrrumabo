@@ -7,20 +7,21 @@ var TIMER = false;
 var CerebrumIrrumabo = function(input, code, pointerLength) {
     var that = this;
     
-    var input = input;
-    var code = code;
-    var pointerLength = pointerLength;
-    
-    
-    var debug = true;
-    if (pointerLength == undefined) {
-        var pointerLength = 30;
+    this.input = input;
+    this.code = code;
+    if (pointerLength) {
+        this.pointerLength = pointerLength;
+    } else {
+        this.pointerLength = 200;
     }
     
+    
+    this.debug = true;
+    
     var breakPoints = [];
-    function addBreakpoint(index) {
-        if (!debug) {
-            debug = true;
+    this.addBreakpoint = function(index) {
+        if (!that.debug) {
+            that.debug = true;
         }
         breakPoints.push(parseInt(index));
         console.log(breakPoints);
@@ -32,10 +33,9 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
 		inputPointerIn = 0,
 		pointer = initializePointer(pointerLength),
 		outputString = '';
-    function step() {
-    	// var input = this.input, code = this.code;
-        if (inputPointer <= code.length - 1) {
-            var ch = code.charAt(inputPointer);
+    this.step = function () {
+        if (inputPointer <= that.code.length - 1) {
+            var ch = that.code.charAt(inputPointer);
             if (ch == "+") {
                 pointer[pointerPos] = pointer[pointerPos] + 1;
             }
@@ -60,8 +60,8 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
             }
             if (ch == ",") {
     			var r; //TODO fix this
-                if (inputPointerIn < input.length) {
-                    r = input.charCodeAt(inputPointerIn);
+                if (inputPointerIn < that.input.length) {
+                    r = that.input.charCodeAt(inputPointerIn);
                     pointer[pointerPos] = r;
                 } else {
                     pointer[pointerPos] = 0;
@@ -76,7 +76,7 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
                     var a = "";
                     while (a != "]") {
                         inputPointer = inputPointer + 1;
-                        a = code.charAt(inputPointer);
+                        a = that.code.charAt(inputPointer);
                     }
                 }
             }
@@ -85,7 +85,7 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
                     var a = "";
                     while(a != "[") {
                         inputPointer = inputPointer - 1;
-                        a = code.charAt(inputPointer);
+                        a = that.code.charAt(inputPointer);
                     }
                 }
             }
@@ -112,13 +112,13 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
     
     
     
-	var run = function() {
+	this.run = function() {
         if (!this.debug) {
-             reset();
+             that.reset();
         }
         var endOfCode = false;
         while (endOfCode != true && breakPoints.indexOf(endOfCode.codePos) == -1) {
-            endOfCode = step();
+            endOfCode = that.step();
         }
         // console.log(endOfCode);
         if (endOfCode == true){
@@ -132,7 +132,7 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
  
     };
     
-    var reset = function () {
+    this.reset = function () {
         pointerPos = 0,
 		inputPointer = 0,
 		inputPointerIn = 0,
@@ -140,16 +140,16 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
 		outputString = '';
     };
     
-    return {
-        input: input,
-        code: code,
-        debug: debug,
-        addBreakpoint: addBreakpoint,
-        pointerLength: pointerLength,
-        run: run,
-        step: step,
-        reset: reset
-    };
+    // return {
+    //     input: input,
+    //     code: code,
+    //     debug: debug,
+    //     addBreakpoint: addBreakpoint,
+    //     pointerLength: pointerLength,
+    //     run: run,
+    //     step: step,
+    //     reset: reset
+    // };
 };
 
 
