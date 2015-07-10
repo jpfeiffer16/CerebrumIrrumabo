@@ -26,6 +26,7 @@ angular.module('app', ['ui.layout'])
 			matchBrackets: true,
 			autoCloseBrackets: true
 		});
+		//Set up save shorcut
 		editor.setOption('extraKeys', {
 			'Ctrl-S': function () {
 				that.saveFile(that.fileEntry);
@@ -55,9 +56,10 @@ angular.module('app', ['ui.layout'])
 		var runner = new CerebrumIrrumabo('', '', this.pointerLen);
 		this.run = function (input, code) {
 			if (engineIsDirty) {
-				runner.debug = true;
+				runner.debug = true;//TODO This needs to be based off of a setting of some type
 				runner.code = code;
 				runner.input = input;
+				runner.reset();
 			}
 			try {
 				var test = runner.run();
@@ -107,8 +109,8 @@ angular.module('app', ['ui.layout'])
 						$scope.$apply();
 						console.log('File Saved');
 					};
-					
 					fileWriter.write(blob);
+					fileWriter.truncate(editor.getValue().length);
 				});
 			} else {
 				throw 'File was not saved';
