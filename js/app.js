@@ -26,10 +26,13 @@ angular.module('app', ['ui.layout'])
 			matchBrackets: true,
 			autoCloseBrackets: true
 		});
-		//Set up save shorcut
+		//Set up shorcuts
 		editor.setOption('extraKeys', {
 			'Ctrl-S': function () {
 				that.saveFile(that.fileEntry);
+			},
+			'Ctrl-O': function () {
+				that.openFile();
 			}
 		});
 		
@@ -104,13 +107,13 @@ angular.module('app', ['ui.layout'])
 					var blob = new Blob([editor.getValue()], {type: "text/plain"});
 					
 					fileWriter.onwriteend = function() {
+						fileWriter.truncate(editor.getValue().length);
 						that.saved = true;
 						that.currentFileName = that.loadedFileName;
 						$scope.$apply();
 						console.log('File Saved');
 					};
 					fileWriter.write(blob);
-					fileWriter.truncate(editor.getValue().length);
 				});
 			} else {
 				throw 'File was not saved';
@@ -144,17 +147,38 @@ angular.module('app', ['ui.layout'])
 			restrict: 'A',
 			
 			link: function(scope, element, attrs) {
-				// console.log(element);
-				// console.log(attrs);
 				function update() {
 					var winHeight = $window.innerHeight;
 					console.log(winHeight - 300);
-					element.css('height', (winHeight / 1.5).toString() +  'px');
+					element.css('height', (winHeight / 1.5).toString() + 'px');
 				}
 				update();
 				angular.element(window).on('resize', function (e) {
 					update();
 				});
+			}
+		};
+	})
+	.directive('console', function($window) {
+		return {
+			restrict: 'A',
+			
+			link: function(scope, element, attrs) {
+				function update() {
+					console.log('update being called');
+					var ribbonArea = document.getElementById('ribbon-area');
+					var editorArea = document.getElementById('editor-area');
+					
+					var combinedHeight = ribbonArea.offsetHeight + editorArea.offsetHeight;
+					
+					element.css('height', combinedHeight + 'px');
+				}
+				
+				angular.element(window).on('mouseup', function() {
+					update();
+				});
+				
+				
 			}
 		};
 	});
