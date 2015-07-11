@@ -107,13 +107,20 @@ angular.module('app', ['ui.layout'])
 					var blob = new Blob([editor.getValue()], {type: "text/plain"});
 					
 					fileWriter.onwriteend = function() {
-						fileWriter.truncate(editor.getValue().length);
-						that.saved = true;
-						that.currentFileName = that.loadedFileName;
-						$scope.$apply();
-						console.log('File Saved');
+						fileWriter.onwriteend = function () {
+							that.saved = true;
+							that.currentFileName = that.loadedFileName;
+							$scope.$apply();
+							console.log('File Saved');
+						}
+						
+						//NOW we save the stupid thing
+						fileWriter.write(blob);//If this doesn't error, we can assume it's saved
+						
 					};
-					fileWriter.write(blob);
+					
+					//Truncate it fist. Dangit.. I'm so sick of this error. It's slowing things down. Let's kill this sombitch...
+					fileWriter.truncate(editor.getValue().length);
 				});
 			} else {
 				throw 'File was not saved';
