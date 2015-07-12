@@ -1,3 +1,13 @@
+.loading-screen {
+	width: 100%;
+	height: 100%;
+	background-color: ghostwhite;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+
 .hidden {
 	display: none;
 }
@@ -37,6 +47,14 @@ body {
 #ribbon-area .ribbon-group {
 	display: inline;
 	margin: 0px 10px;
+}
+
+#ribbon-area .ribbon-group.right {
+	float: right;
+}
+
+.small {
+	font-size: 11px;
 }
 
 input[type="text"] {
@@ -103,7 +121,13 @@ div[ui-splitbar]:nth-child(2) {
 	color: #9A9A9B;
 }
 
-
+#console-container, #debug-container {
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	position: relative;
+	top: -25px;
+}
 
 
 /*Custom Bf-lang styles for Code Mirror*/

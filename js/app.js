@@ -33,6 +33,10 @@ angular.module('app', ['ui.layout'])
 			},
 			'Ctrl-O': function () {
 				that.openFile();
+			},
+			'Ctrl-R': function() {
+				that.run(that.input, editor.getValue());
+				$scope.$apply();
 			}
 		});
 		
@@ -178,14 +182,24 @@ angular.module('app', ['ui.layout'])
 					
 					var combinedHeight = ribbonArea.offsetHeight + editorArea.offsetHeight;
 					
-					element.css('height', combinedHeight + 'px');
+					var windowHeight = window.innerHeight;
+					
+					element.css('height', (windowHeight - combinedHeight) - 46 + 'px');
 				}
 				
-				angular.element(window).on('mouseup', function() {
+				angular.element(window).on('mousemove', function() {
 					update();
 				});
 				
 				
 			}
 		};
+	}).directive('destroy', function() {
+		return {
+			restrict: 'A',
+			
+			link: function(scope, element, attrs) {
+				element.remove();
+			}
+		}
 	});
