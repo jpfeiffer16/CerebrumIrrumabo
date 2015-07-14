@@ -18,6 +18,8 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
     
     this.debug = true;
     
+    this.debugObject = {};
+    
     var breakPoints = [];
     this.addBreakpoint = function(index) {
         if (!that.debug) {
@@ -90,13 +92,16 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
                 }
             }
             inputPointer++;
-            return {
+            var debugObject = {
                 pointer: pointer,
                 pointerPos: pointerPos,
                 inputPos: inputPointerIn - 1,
                 codePos: inputPointer - 1 == -1 ? 0 : inputPointer - 1,
                 output: outputString
             };
+            that.debugObject = debugObject;
+            return debugObject;
+            
         } else {
             return true;
         }

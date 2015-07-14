@@ -61,6 +61,12 @@ angular.module('app', ['ui.layout'])
 		//Set up the CerebrumIrrumabo Instance
 		this.pointerLen = 200;//TODO: Add a binding for this on the front end
 		var runner = new CerebrumIrrumabo('', '', this.pointerLen);
+		runner.addBreakpoint(50);
+		this.debugObject = runner.debugObject;//TODO this needs looking at
+		
+		$scope.$watch('debugObject', function() {
+			console.log(that.debugObject);
+		});
 		this.run = function (input, code) {
 			if (engineIsDirty) {
 				runner.debug = true;//TODO This needs to be based off of a setting of some type
@@ -73,6 +79,8 @@ angular.module('app', ['ui.layout'])
 				if (test.endOfCode) {
 					this.results.push(test.output + '\n');
 					engineIsDirty = true;
+				} else {
+					this.debugObject = test;
 				}
 				console.log(test);
 			} catch (e) {
