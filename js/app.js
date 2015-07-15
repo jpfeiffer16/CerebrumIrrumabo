@@ -139,6 +139,14 @@ angular.module('app', ['ui.layout'])
 			}
 		};
 		
+		this.fromCharCode = function(charCode) {
+			if (charCode) {
+				return String.fromCharCode(charCode);
+			} else {
+				return null;
+			}
+		}
+		
 		this.toggleConsoleArea = function(panelToShow) {
 			if (panelToShow == 'console') {
 				this.consoleClass = '';
@@ -202,7 +210,8 @@ angular.module('app', ['ui.layout'])
 				
 			}
 		};
-	}).directive('destroy', function() {
+	})
+	.directive('destroy', function() {
 		return {
 			restrict: 'A',
 			

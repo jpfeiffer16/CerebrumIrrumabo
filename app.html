@@ -45,7 +45,13 @@
           <br /></span>
         </div>
         <div id="debug-container" class="{{main.debugClass}}">
-          <span class="debug-pebble" ng-repeat="item in main.debugObject.pointer track by $index">{{item}}</span>
+          <span class="debug-pill" ng-repeat="item in main.debugObject.pointer track by $index" debug-hover>
+            <div class="index">{{$index}}</div>
+            <div class="data">{{item}}</div>
+            <div class="debug-info-popup">
+              {{main.fromCharCode(item) || '?'}}
+            </div>
+          </span>
         </div>
       </div>
     </div>

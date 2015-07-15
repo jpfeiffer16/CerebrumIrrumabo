@@ -92,6 +92,51 @@ input[type="text"] {
 
 
 
+.debug-pill {
+	width: 100px;
+	height: 20px;
+	color: brown;
+	background-color: #A57D49;
+	border-radius: 5px;
+  	display: inline-block;
+  	margin: 5px;
+}
+
+.debug-pill .index {
+	height: 100%;
+	display: inline-block;
+	padding-left: 5px;
+	min-width: 25px;
+	background-color: rgb(98, 79, 55);
+	border-radius: 5px 0px 0px 5px;
+}
+
+.debug-pill .data {
+	text-align: right;
+	display: inline-block;
+	padding-right: 5px;
+	float: right;
+	min-width: 50px;
+}
+
+.debug-pill .debug-info-popup {
+	position: absolute;
+	background-color: #1E1E1E;
+	border-radius: 5px;
+	color: #9A9A9B;
+	margin-left: 38px;
+  	padding: 0px 5px;
+	display: none;
+}
+
+.debug-pill:hover {
+	cursor: pointer;
+}
+
+.debug-pill:hover .debug-info-popup {
+	display: block;
+}
+
 
 /*#console-area {
 	height: 80%;
