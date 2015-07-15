@@ -125,7 +125,6 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
         while (endOfCode != true && breakPoints.indexOf(endOfCode.codePos) == -1) {
             endOfCode = that.step();
         }
-        // console.log(endOfCode);
         if (endOfCode == true){
             return {
                 endOfCode: true,
@@ -134,7 +133,31 @@ var CerebrumIrrumabo = function(input, code, pointerLength) {
         } else {
             return endOfCode;
         }
- 
+    };
+    
+    this.runAtSpeed = function(stepSpeed) {
+        if (!this.debug) {
+             that.reset();
+        }
+        var endOfCode = false;
+        
+        var codeTimer = setInterval(function() {
+            console.log('runAtSpeed being called');
+            if (endOfCode != true && breakPoints.indexOf(endOfCode.codePos) == -1) {
+                endOfCode = that.step();
+            } else {
+                if (endOfCode == true) {
+                    clearInterval(codeTimer);
+                    return {
+                        endOfCode: true,
+                        output: outputString
+                    }
+                } else {
+                    clearInterval(codeTimer);
+                    return endOfCode;
+                }
+            }
+        }, stepSpeed);
     };
     
     this.reset = function () {
