@@ -37,6 +37,11 @@ angular.module('app', ['ui.layout'])
 			'Ctrl-R': function() {
 				that.run(that.input, editor.getValue());
 				$scope.$apply();
+			},
+			'Ctrl-B': function() {
+				//Get the selection point
+				var pos = editor.indexFromPos(editor.getCursor());
+				that.addBreakpoint(pos);
 			}
 		});
 		
@@ -52,6 +57,20 @@ angular.module('app', ['ui.layout'])
 			}
 		});
 		
+		
+		
+		this.addBreakpoint = function(index) {
+			//Highlight text and add breakpoint
+			console.log(index);
+			var markStart = editor.posFromIndex(index);
+			var markEnd = markStart;
+			markEnd.ch++;
+			editor.markText(markStart, markEnd, {
+				className: 'debug-breakpoint'
+			});
+			
+			//Add breakpoint
+		};
 		
 		
 		this.code = function() {return editor.getValue();};
