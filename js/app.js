@@ -63,13 +63,17 @@ angular.module('app', ['ui.layout'])
 			//Highlight text and add breakpoint
 			console.log(index);
 			var markStart = editor.posFromIndex(index);
-			var markEnd = markStart;
-			markEnd.ch++;
+			var markEnd = {
+				line: markStart.line,
+				ch: markStart.ch + 1
+			}
+			console.log(markStart, markEnd);
 			editor.markText(markStart, markEnd, {
 				className: 'debug-breakpoint'
 			});
 			
 			//Add breakpoint
+			runner.addBreakpoint(index);
 		};
 		
 		
@@ -80,7 +84,7 @@ angular.module('app', ['ui.layout'])
 		//Set up the CerebrumIrrumabo Instance
 		this.pointerLen = 200;//TODO: Add a binding for this on the front end
 		var runner = new CerebrumIrrumabo('', '', this.pointerLen);
-		runner.addBreakpoint(50);
+		// runner.addBreakpoint(50);
 		this.debugObject = runner.debugObject;//TODO this needs looking at
 		
 		$scope.$watch('debugObject', function() {
@@ -104,6 +108,15 @@ angular.module('app', ['ui.layout'])
 				console.log(test);
 			} catch (e) {
 				this.results.push('Error: ' + e);
+			}
+		};
+		
+		this.step = function() {
+			var stepVal = runner.step();
+			if (!stepVal.endOfCode) {
+				that.debugObject = stepVal;
+			} else {
+				that.results.push(stepVal.output);
 			}
 		};
 		
