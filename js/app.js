@@ -1,10 +1,11 @@
+/* global CodeMirror */
 /* global chrome */
 /* global CerebrumIrrumabo */
 /* global $ */
 /* global angular */
 
 
-angular.module('app', ['ui.layout'])
+angular.module('app', ['ui.layout', 'customDirectives'])
 	.controller('MainCtrl', function($scope) {
 		this.input = '';
 		var that = this;
@@ -84,6 +85,7 @@ angular.module('app', ['ui.layout'])
 		//Set up the CerebrumIrrumabo Instance
 		this.pointerLen = 200;//TODO: Add a binding for this on the front end
 		var runner = new CerebrumIrrumabo('', '', this.pointerLen);
+		this.runner = runner;
 		// runner.addBreakpoint(50);
 		this.debugObject = runner.debugObject;//TODO this needs looking at
 		
@@ -95,7 +97,7 @@ angular.module('app', ['ui.layout'])
 				runner.debug = true;//TODO This needs to be based off of a setting of some type
 				runner.code = code;
 				runner.input = input;
-				runner.reset();
+				// runner.reset();//TOdo This needs to be re-addressed
 			}
 			try {
 				var test = runner.run();
@@ -189,6 +191,9 @@ angular.module('app', ['ui.layout'])
 			}
 		};
 		
+		this.reset = function() {
+			runner.reset();
+		};
 		
 		//Init:
 		//TODO: Fix this as well since, you guessed it, it's not fffffinng working either....
@@ -199,56 +204,56 @@ angular.module('app', ['ui.layout'])
 			console.log(result.lastLoaded.toString());
 		});
 		
-	})
-	
-	.directive('heightWatch', function($window) {
-		return {
-			restrict: 'A',
-			
-			link: function(scope, element, attrs) {
-				function update() {
-					var winHeight = $window.innerHeight;
-					console.log(winHeight - 300);
-					element.css('height', (winHeight / 1.5).toString() + 'px');
-				}
-				update();
-				angular.element(window).on('resize', function (e) {
-					update();
-				});
-			}
-		};
-	})
-	.directive('console', function($window) {
-		return {
-			restrict: 'A',
-			
-			link: function(scope, element, attrs) {
-				function update() {
-					console.log('update being called');
-					var ribbonArea = document.getElementById('ribbon-area');
-					var editorArea = document.getElementById('editor-area');
-					
-					var combinedHeight = ribbonArea.offsetHeight + editorArea.offsetHeight;
-					
-					var windowHeight = window.innerHeight;
-					
-					element.css('height', (windowHeight - combinedHeight) - 46 + 'px');
-				}
-				
-				angular.element(window).on('mousemove', function() {
-					update();
-				});
-				
-				
-			}
-		};
-	})
-	.directive('destroy', function() {
-		return {
-			restrict: 'A',
-			
-			link: function(scope, element, attrs) {
-				element.remove();
-			}
-		}
 	});
+	
+	// .directive('heightWatch', function($window) {
+	// 	return {
+	// 		restrict: 'A',
+	// 		
+	// 		link: function(scope, element, attrs) {
+	// 			function update() {
+	// 				var winHeight = $window.innerHeight;
+	// 				console.log(winHeight - 300);
+	// 				element.css('height', (winHeight / 1.5).toString() + 'px');
+	// 			}
+	// 			update();
+	// 			angular.element(window).on('resize', function (e) {
+	// 				update();
+	// 			});
+	// 		}
+	// 	};
+	// })
+	// .directive('console', function($window) {
+	// 	return {
+	// 		restrict: 'A',
+	// 		
+	// 		link: function(scope, element, attrs) {
+	// 			function update() {
+	// 				console.log('update being called');
+	// 				var ribbonArea = document.getElementById('ribbon-area');
+	// 				var editorArea = document.getElementById('editor-area');
+	// 				
+	// 				var combinedHeight = ribbonArea.offsetHeight + editorArea.offsetHeight;
+	// 				
+	// 				var windowHeight = window.innerHeight;
+	// 				
+	// 				element.css('height', (windowHeight - combinedHeight) - 46 + 'px');
+	// 			}
+	// 			
+	// 			angular.element(window).on('mousemove', function() {
+	// 				update();
+	// 			});
+	// 			
+	// 			
+	// 		}
+	// 	};
+	// })
+	// .directive('destroy', function() {
+	// 	return {
+	// 		restrict: 'A',
+	// 		
+	// 		link: function(scope, element, attrs) {
+	// 			element.remove();
+	// 		}
+	// 	}
+	// });

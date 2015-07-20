@@ -18,6 +18,8 @@
       <div class="ribbon-group">
         <button id="button-run" data-ng-click="main.run(main.input, main.code())"><span class="icon-play3"></span></button>
         <button><span class="icon-eye-plus"></span></button>
+        <button ng-click="main.step()"><span class="icon-arrow-right2"></span></button>
+        <button ng-click="main.reset()"><span class="icon-redo"></span></button>
       </div>
       <div class="ribbon-group">
         <input type="text" ng-model="main.input" placeholder="Enter Input" />
@@ -46,7 +48,7 @@
           <br /></span>
         </div>
         <div id="debug-container" class="{{main.debugClass}}">
-          <span class="debug-pill" ng-repeat="item in main.debugObject.pointer track by $index" debug-hover>
+          <span class="debug-pill" ng-repeat="item in main.runner.debugObject.pointer track by $index" debug-hover>
             <div class="index">{{$index}}</div>
             <div class="data">{{item}}</div>
             <div class="debug-info-popup">
@@ -69,6 +71,11 @@
     </div>
     <script src="./js/vendor/angular-1-1-4.js"></script>
     <script src="./js/ui-layout.js"></script>
+    
+    <div id="directives">
+      <script src="js/directives/CustomDirectives.js"></script>
+    </div>
+    
     <script src="js/codemirror-5.4/lib/codemirror.js"></script>
     <script src="js/codemirror-5.4/mode/javascript/javascript.js"></script>
     <script src="js/codemirror-5.4/addon/mode/simple.js"></script>

@@ -44,3 +44,15 @@
 .icon-stop2:before {
 	content: "\ea1e";
 }
+.icon-arrow-right2:before {
+	content: "\ea3c";
+}
+.icon-redo:before {
+	content: "\e966";
+}
+.icon-eye:before {
+	content: "\e9ce";
+}
+.icon-eye-plus:before {
+	content: "\e9cf";
+}
